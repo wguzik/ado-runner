@@ -14,6 +14,8 @@ Po takiej operacji maszyna wirtualna będzie mogła być używana do uruchamiani
 
 ## Przygotowanie infrastruktury
 
+Uruchom Cloud Shell.
+
 Zrób klon repozytorium:
 
 ```bash
@@ -62,7 +64,10 @@ Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka
 
 żeby podejrzeć co jest potrzebne do konfiguracji agenta. 
 
+Wszystkie te rzeczy są podane w instrukcji poniżej, to jest dla Twojej informacji skąd się to bierze.
+
 ### Przygotowanie Personal Access Token (PAT)
+
 1. Przejdź do Azure DevOps -> User Settings -> Personal Access Tokens
 2. Utwórz nowy token z uprawnieniami:
    - Agent Pools (Read & Manage)
@@ -79,10 +84,12 @@ Połącz się z maszyną wirtualną:
 
 > Hasło znajdziesz w Key Vault.
 
+Możesz skorzystać z `ssh` zarówno ze swojego komputera jak i cloud shell.
+
 ```bash
 ssh adminuser@<vm-ip>
 
-# na pytanie o rodzaj uwierzytelniania wpisz "yes", a potem wklej hasło
+# na pytanie odpowiedz "yes", a potem wklej hasło
 ```
 
 > Poniższe kroki wykonuj na maszynie wirtualnej.
@@ -97,6 +104,9 @@ Pobierz agenta:
 
 ```bash
 wget https://vstsagentpackage.azureedge.net/agent/3.248.0/vsts-agent-linux-x64-3.248.0.tar.gz
+```
+
+```bash
 tar zxvf vsts-agent-linux-x64-3.248.0.tar.gz
 ```
 
@@ -109,11 +119,11 @@ Skonfiguruj agenta
 
 ```bash
 ./config.sh
-
-# Zobacz niżej odpowiedzi na pytania
 ```
 
 ```bash
+# To są odpowiedzi na formularz z polecenia wyżej
+
 Enter (Y/N) Accept the Team Explorer Everywhere license agreement now? (press enter for N) > Y
 
 Enter server URL: https://dev.azure.com/<nazwa organizacji>
@@ -122,7 +132,7 @@ Enter server URL: https://dev.azure.com/<nazwa organizacji>
 
 Enter authentication type (press enter for PAT) > [enter]
 
-# w kolejnym kroku wklej token
+Enter personal access token > [wklej PAT]
 
 # Poniższe kroki z domyślnymi wartościami
 
@@ -137,12 +147,23 @@ Uruchom usługę:
 
 ```bash
 sudo ./svc.sh install
+```
 
+```bash
 sudo ./svc.sh start
+```
 
+```bash
 # sprawdź status usługi
 sudo ./svc.sh status
 ```
+
+### Zweryfikuj czy agent jest podłączony
+
+Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka `Agent`) 
+
+<img src='./media/widok-agent-dodany.png' width=760/>
+
 
 ## Konfiguracja pipeline
 
@@ -161,19 +182,20 @@ Po uruchomieniu swojego pipeline, musisz przyznać uprawnienia.
 
 Nawiguj do "Pipelines" -> znajdź pipeline:
 
-<img src='./media/widok-pipeline.png' width=360/>
+<img src='./media/widok-pipeline.png' width=760/>
 
 kliknij "View"
 
-<img src='./media/widok-pipeline-przyznanie-uprawnien.jpeg' width=360/>
+<img src='./media/widok-pipeline-przyznanie-uprawnien.jpeg' width=460/>
 
 wybierz "Permit".
-
 
 ### Przykład działającej konfiguracji
 
 > Klik, to filmik.
 [![Demo](https://img.youtube.com/vi/DM6CNTxY6pM/0.jpg)](https://www.youtube.com/watch?v=DM6CNTxY6pM)
+
+> Możesz sklonować to repozytorium  lub skopiować pliki `ado-selfhosted.yaml` oraz `docker-compose.yaml`, żeby przetestować działanie agenta.
 
 ## Usuń zasoby
 
