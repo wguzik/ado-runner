@@ -10,6 +10,8 @@ Po takiej operacji maszyna wirtualna będzie mogła być używana do uruchamiani
 
 - Skonfigurowany projekt w Azure DevOps
 
+[Lista projektów w ADO](https://aex.dev.azure.com/me?mkt=pl-PL) - powinień być dostępny przynajmniej jeden projekt.
+
 ## Przygotowanie infrastruktury
 
 Zrób klon repozytorium:
