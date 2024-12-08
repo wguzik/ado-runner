@@ -173,3 +173,9 @@ Możesz również usunąć maszynę wirtualną w Azure Portal.
 Usuń agenta w Azure DevOps -> Project Settings -> Agent pools -> Default -> "Edit" -> "Delete".
 
 W razie potrzeby stwórz nowego agenta.
+
+## Dokumentacja
+
+[Self-hosted agent linux](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/linux-agent?view=azure-devops)
+
+[PAT dla ADO](https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/personal-access-token-agent-registration?view=azure-devops)
