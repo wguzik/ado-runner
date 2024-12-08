@@ -50,6 +50,8 @@ terraform apply
 
 Zapisz zewnętrzny adres IP maszyny wirtualnej oraz znajdź hasło do maszyny wirtualnej w Key Vault.
 
+> Ważne! Ta maszyna wirtualna nie ma żadnych zabezpieczeń, jest dostępna z publicznego internetu. Jest to uproszczenie, które zostało zastosowane w celach demonstracyjnych.
+
 ## Konfiguracja agenta
 
 ### Detale agentów
@@ -66,83 +68,108 @@ Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka
 
 3. Zapisz na boku wartość tokenu, bo ponieważ jeżeli zamkniesz okno, nie będzie można go ponownie wyświetlić.
 
-<video src='./media/setup-pat.mp4' width=360 controls></video>
-
+[![Tworzenie PAT](https://img.youtube.com/vi/8b0oPzN-dmw/0.jpg)](https://www.youtube.com/watch?v=8b0oPzN-dmw)
 
 ### 2. Konfiguracja agenta na maszynie wirtualnej
 
-
-## Połącz się z maszyną wirtualną
+Połącz się z maszyną wirtualną
 
 Hasło znajdziesz w Key Vault
 
 ```bash
 ssh adminuser@<vm-ip>
+
+# na pytanie o rodzaj uwierzytelniania wpisz "yes", a potem wklej hasło
 ```
 
-## Utwórz katalog roboczy
-
+Utwórz katalog roboczy
 
 ```bash
 mkdir myagent && cd myagent
 ```
 
-
-##Pobierz agenta
+Pobierz agenta
 
 ```bash
 wget https://vstsagentpackage.azureedge.net/agent/3.248.0/vsts-agent-linux-x64-3.248.0.tar.gz
 tar zxvf vsts-agent-linux-x64-3.248.0.tar.gz
 ```
 
-## zainstaluj aplikacje
+Zainstaluj aplikacje niezbędne do działania agenta
 
 ```
 sudo ./bin/installdependencies.sh
-
-
+```
 Skonfiguruj agenta
 
 ```bash
 ./config.sh
 
-Enter (Y/N) Accept the Team Explorer Everywhere license agreement now? (press enter for N) >
-Y
+Enter (Y/N) Accept the Team Explorer Everywhere license agreement now? (press enter for N) > Y
 
 Enter server URL: https://dev.azure.com/<nazwa organizacji>
-dev.azure.com/wojciechguzik0366/
+
+# np. https://dev.azure.com/wojciechguzik0366/
 
 Enter authentication type (press enter for PAT) > [enter]
+
+# w kolejnym kroku wklej token
+
+# Poniższe kroki z domyślnymi wartościami
 
 Enter agent pool (press enter for default) > [enter]
 
 Enter agent name (press enter for ado-wg-vm) > [enter]
 
 Enter work folder (press enter for _work) > [enter]
+```
 
-
-## wygeneruj PAT - to nie najszczęsliwa opcja, ale działa na nasze potrzeby, lepszy byłby Key Vault
-
-
-Zainstaluj usługę
-sudo ./svc.sh install
 Uruchom usługę
+
+```bash
+sudo ./svc.sh install
+
 sudo ./svc.sh start
-bash
-Sprawdź status usługi
+
+# sprawdź status usługi
 sudo ./svc.sh status
+```
 
-Nawiguj do Pipelines i zonavz, że musisz przyznać uprawnienia.
+## Konfiguracja pipeline
 
-Przyznaj permin i czekaj.
+Aby skorzystać z agenta, musisz dodać go wskazać w pipeline:
 
-Sprawdź logi systemowe
-journalctl -u vsts.agent
-bash
-Zatrzymanie agenta
-sudo ./svc.sh stop
-Restart agenta
-sudo ./svc.sh restart
-Odinstalowanie agenta
-sudo ./svc.sh uninstall
-You can create this file using one of these methods:
+```yaml
+pool:
+  name: 'default'
+```
+
+Po uruchomieniu swojego pipeline, musisz przyznać uprawnienia.
+
+Nawiguj do "Pipelines" -> znajdź pipeline:
+
+<img src='./media/widok-pipeline.png' width=360/>
+
+kliknij "View"
+
+<img src='./media/widok-pipeline-przyznanie-uprawnien.jpeg' width=360/>
+
+wybierz "Permit".
+
+Przykład działającej konfiguracji:
+
+[![Demo](https://img.youtube.com/vi/DM6CNTxY6pM/0.jpg)](https://www.youtube.com/watch?v=DM6CNTxY6pM)
+
+## Usuń zasoby
+
+Jeżeli nie planujesz dalszego korzystania z agenta, usuń zasoby w Terraform.
+
+```bash
+terraform destroy
+```
+
+Możesz również usunąć maszynę wirtualną w Azure Portal.
+
+Usuń agenta w Azure DevOps -> Project Settings -> Agent pools -> Default -> "Edit" -> "Delete".
+
+W razie potrzeby stwórz nowego agenta.
