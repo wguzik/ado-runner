@@ -60,7 +60,7 @@ Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka
 
 żeby podejrzeć co jest potrzebne do konfiguracji agenta. 
 
-### 1. Przygotowanie Personal Access Token (PAT)
+### Przygotowanie Personal Access Token (PAT)
 1. Przejdź do Azure DevOps -> User Settings -> Personal Access Tokens
 2. Utwórz nowy token z uprawnieniami:
    - Agent Pools (Read & Manage)
@@ -68,13 +68,14 @@ Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka
 
 3. Zapisz na boku wartość tokenu, bo ponieważ jeżeli zamkniesz okno, nie będzie można go ponownie wyświetlić.
 
+> Klik, to filmik.
 [![Tworzenie PAT](https://img.youtube.com/vi/8b0oPzN-dmw/0.jpg)](https://www.youtube.com/watch?v=8b0oPzN-dmw)
 
-### 2. Konfiguracja agenta na maszynie wirtualnej
+### Konfiguracja agenta na maszynie wirtualnej
 
-Połącz się z maszyną wirtualną
+Połącz się z maszyną wirtualną:
 
-Hasło znajdziesz w Key Vault
+> Hasło znajdziesz w Key Vault.
 
 ```bash
 ssh adminuser@<vm-ip>
@@ -82,13 +83,15 @@ ssh adminuser@<vm-ip>
 # na pytanie o rodzaj uwierzytelniania wpisz "yes", a potem wklej hasło
 ```
 
-Utwórz katalog roboczy
+> Poniższe kroki wykonuj na maszynie wirtualnej.
+
+Utwórz katalog roboczy:
 
 ```bash
 mkdir myagent && cd myagent
 ```
 
-Pobierz agenta
+Pobierz agenta:
 
 ```bash
 wget https://vstsagentpackage.azureedge.net/agent/3.248.0/vsts-agent-linux-x64-3.248.0.tar.gz
@@ -105,6 +108,10 @@ Skonfiguruj agenta
 ```bash
 ./config.sh
 
+# Zobacz niżej odpowiedzi na pytania
+```
+
+```bash
 Enter (Y/N) Accept the Team Explorer Everywhere license agreement now? (press enter for N) > Y
 
 Enter server URL: https://dev.azure.com/<nazwa organizacji>
@@ -124,7 +131,7 @@ Enter agent name (press enter for ado-wg-vm) > [enter]
 Enter work folder (press enter for _work) > [enter]
 ```
 
-Uruchom usługę
+Uruchom usługę:
 
 ```bash
 sudo ./svc.sh install
@@ -137,12 +144,16 @@ sudo ./svc.sh status
 
 ## Konfiguracja pipeline
 
-Aby skorzystać z agenta, musisz dodać go wskazać w pipeline:
+### Wskazanie puli agentów
+
+Aby skorzystać z agenta, musisz dodać go wskazać pulę do której należy. Dodaj/edytuj w pipeline `pool` na:
 
 ```yaml
 pool:
   name: 'default'
 ```
+
+### Przyznanie uprawnień
 
 Po uruchomieniu swojego pipeline, musisz przyznać uprawnienia.
 
@@ -156,8 +167,10 @@ kliknij "View"
 
 wybierz "Permit".
 
-Przykład działającej konfiguracji:
 
+### Przykład działającej konfiguracji
+
+> Klik, to filmik.
 [![Demo](https://img.youtube.com/vi/DM6CNTxY6pM/0.jpg)](https://www.youtube.com/watch?v=DM6CNTxY6pM)
 
 ## Usuń zasoby
