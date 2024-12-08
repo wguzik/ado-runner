@@ -66,9 +66,7 @@ Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka
 
 3. Zapisz na boku wartość tokenu, bo ponieważ jeżeli zamkniesz okno, nie będzie można go ponownie wyświetlić.
 
-
-<video src='./media/setup-pat.mp4' width=360 controls/>
-
+<video src='./media/setup-pat.mp4' width=360 controls></video>
 
 
 ### 2. Konfiguracja agenta na maszynie wirtualnej
