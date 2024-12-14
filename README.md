@@ -47,8 +47,8 @@ Zapisz zmiany i wyjdź.
 Wdróż infrastrukturę:
 
 ```bash
-terraform validate
 terraform init
+terraform validate
 terraform apply
 ```
 
