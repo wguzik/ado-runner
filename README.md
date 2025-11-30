@@ -16,25 +16,32 @@ Po takiej operacji maszyna wirtualna będzie mogła być używana do uruchamiani
 
 Uruchom Cloud Shell.
 
-Zrób klon repozytorium:
+1. Zrób klon repozytorium
 
 ```bash
 git clone https://github.com/wguzik/ado-runner.git
 ```
 
-Wejdź do katalogu z projektem i infrastrukturą:
+2. Wejdź do katalogu z projektem i infrastrukturą
 
 ```bash
 cd ado-runner/infra/
 ```
 
-Przygotuj plik z zmiennymi:
+3. Przygotuj plik z zmiennymi
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-Wprowadź wartości dla zmiennych w pliku `terraform.tfvars`
+4. Wprowadź subskrypcję
+
+```bash
+subscription_id=$(az account show --query="id")
+sed -i "s/YourSubscriptionID/$subscription_id/g" terraform.tfvars
+```
+
+5. Wprowadź wartości dla zmiennych w pliku `terraform.tfvars`
 
 Wystarczy wartość `owner`, inicjały wystarczą.
 
@@ -44,7 +51,7 @@ code .
 
 Zapisz zmiany i wyjdź.
 
-Wdróż infrastrukturę:
+6. Wdróż infrastrukturę
 
 ```bash
 terraform init
