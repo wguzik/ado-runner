@@ -5,7 +5,7 @@ pool:
   name: 'default'
 
 steps:
-  - task: DockerCompose@0
+  - task: DockerCompose@1
     inputs:
       containerregistrytype: 'Container Registry'
       dockerComposeFile: '**/docker-compose.yml'
