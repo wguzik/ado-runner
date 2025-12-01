@@ -1,3 +1,4 @@
 project_name       = "ado"
 owner              = "wg"
 location           = "northeurope"
+subscription_id    = YourSubscriptionID

@@ -16,25 +16,32 @@ Po takiej operacji maszyna wirtualna będzie mogła być używana do uruchamiani
 
 Uruchom Cloud Shell.
 
-Zrób klon repozytorium:
+1. Zrób klon repozytorium
 
 ```bash
 git clone https://github.com/wguzik/ado-runner.git
 ```
 
-Wejdź do katalogu z projektem i infrastrukturą:
+2. Wejdź do katalogu z projektem i infrastrukturą
 
 ```bash
 cd ado-runner/infra/
 ```
 
-Przygotuj plik z zmiennymi:
+3. Przygotuj plik z zmiennymi
 
 ```bash
 cp terraform.tfvars.example terraform.tfvars
 ```
 
-Wprowadź wartości dla zmiennych w pliku `terraform.tfvars`
+4. Wprowadź subskrypcję
+
+```bash
+subscription_id=$(az account show --query="id")
+sed -i "s/YourSubscriptionID/$subscription_id/g" terraform.tfvars
+```
+
+5. Wprowadź wartości dla zmiennych w pliku `terraform.tfvars`
 
 Wystarczy wartość `owner`, inicjały wystarczą.
 
@@ -44,7 +51,7 @@ code .
 
 Zapisz zmiany i wyjdź.
 
-Wdróż infrastrukturę:
+6. Wdróż infrastrukturę
 
 ```bash
 terraform init
@@ -64,7 +71,7 @@ Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka
 
 żeby podejrzeć co jest potrzebne do konfiguracji agenta. 
 
-Wszystkie te rzeczy są podane w instrukcji poniżej, to jest dla Twojej informacji skąd się to bierze.
+Wszystkie te rzeczy są podane w instrukcji poniżej, to jest dla Twojej informacji skąd informacje pochodzą.
 
 ### Przygotowanie Personal Access Token (PAT)
 
@@ -103,18 +110,19 @@ mkdir myagent && cd myagent
 Pobierz agenta:
 
 ```bash
-wget https://vstsagentpackage.azureedge.net/agent/3.248.0/vsts-agent-linux-x64-3.248.0.tar.gz
+wget https://download.agent.dev.azure.com/agent/4.264.2/vsts-agent-linux-x64-4.264.2.tar.gz
 ```
 
 ```bash
-tar zxvf vsts-agent-linux-x64-3.248.0.tar.gz
+tar zxvf vsts-agent-linux-x64-4.264.2.tar.gz
 ```
 
 Zainstaluj aplikacje niezbędne do działania agenta
 
-```
+```bash
 sudo ./bin/installdependencies.sh
 ```
+
 Skonfiguruj agenta
 
 ```bash
