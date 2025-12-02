@@ -87,7 +87,7 @@ Wszystkie te rzeczy są podane w instrukcji poniżej, to jest dla Twojej informa
 
 ### Konfiguracja agenta na maszynie wirtualnej
 
-- Połącz się z maszyną wirtualną
+1. Połącz się z maszyną wirtualną
 
 > Hasło znajdziesz w Key Vault.
 
@@ -101,26 +101,26 @@ ssh adminuser@<vm-ip>
 
 > Poniższe kroki wykonuj na maszynie wirtualnej.
 
-- Dokończ konfigurację dockera
+2. Dokończ konfigurację dockera
 
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-- Zweryfikuj działanie dockera
+3. Zweryfikuj działanie dockera
   
 ```bash
 docker run hello-world
 ```
 
-- Utwórz katalog roboczy:
+4. Utwórz katalog roboczy
 
 ```bash
 mkdir myagent && cd myagent
 ```
 
-- Pobierz agenta
+5. Pobierz agenta
 
 ```bash
 wget https://download.agent.dev.azure.com/agent/4.264.2/vsts-agent-linux-x64-4.264.2.tar.gz
@@ -130,13 +130,13 @@ wget https://download.agent.dev.azure.com/agent/4.264.2/vsts-agent-linux-x64-4.2
 tar zxvf vsts-agent-linux-x64-4.264.2.tar.gz
 ```
 
-- Zainstaluj aplikacje niezbędne do działania agenta
+6. Zainstaluj aplikacje niezbędne do działania agenta
 
 ```bash
 sudo ./bin/installdependencies.sh
 ```
 
-- Skonfiguruj agenta
+7. Skonfiguruj agenta
 
 ```bash
 ./config.sh
@@ -164,7 +164,7 @@ Enter agent name (press enter for ado-wg-vm) > [enter]
 Enter work folder (press enter for _work) > [enter]
 ```
 
-- Uruchom usługę
+8. Uruchom usługę
 
 ```bash
 sudo ./svc.sh install
