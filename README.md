@@ -87,11 +87,24 @@ Wszystkie te rzeczy są podane w instrukcji poniżej, to jest dla Twojej informa
 
 ### Konfiguracja agenta na maszynie wirtualnej
 
-Połącz się z maszyną wirtualną:
+- Dokończ konfigurację dockera
+
+```bash
+usermod -aG docker $USER
+newgrp docker
+```
+
+- Zweryfikuj działanie dockera
+  
+```bash
+docker run hello-world
+```
+
+- Połącz się z maszyną wirtualną
 
 > Hasło znajdziesz w Key Vault.
 
-Możesz skorzystać z `ssh` zarówno ze swojego komputera jak i cloud shell.
+> Możesz skorzystać z `ssh` zarówno ze swojego komputera jak i cloud shell.
 
 ```bash
 ssh adminuser@<vm-ip>
@@ -107,7 +120,7 @@ Utwórz katalog roboczy:
 mkdir myagent && cd myagent
 ```
 
-Pobierz agenta:
+- Pobierz agenta
 
 ```bash
 wget https://download.agent.dev.azure.com/agent/4.264.2/vsts-agent-linux-x64-4.264.2.tar.gz
@@ -117,13 +130,13 @@ wget https://download.agent.dev.azure.com/agent/4.264.2/vsts-agent-linux-x64-4.2
 tar zxvf vsts-agent-linux-x64-4.264.2.tar.gz
 ```
 
-Zainstaluj aplikacje niezbędne do działania agenta
+- Zainstaluj aplikacje niezbędne do działania agenta
 
 ```bash
 sudo ./bin/installdependencies.sh
 ```
 
-Skonfiguruj agenta
+- Skonfiguruj agenta
 
 ```bash
 ./config.sh
@@ -151,7 +164,7 @@ Enter agent name (press enter for ado-wg-vm) > [enter]
 Enter work folder (press enter for _work) > [enter]
 ```
 
-Uruchom usługę:
+- Uruchom usługę
 
 ```bash
 sudo ./svc.sh install
@@ -171,7 +184,6 @@ sudo ./svc.sh status
 Przejdź do Azure DevOps -> Project Settings -> Agent pools > Default (zakładka `Agent`) 
 
 <img src='./media/widok-agent-dodany.png' width=760/>
-
 
 ## Konfiguracja pipeline
 
