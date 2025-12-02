@@ -87,19 +87,6 @@ Wszystkie te rzeczy są podane w instrukcji poniżej, to jest dla Twojej informa
 
 ### Konfiguracja agenta na maszynie wirtualnej
 
-- Dokończ konfigurację dockera
-
-```bash
-usermod -aG docker $USER
-newgrp docker
-```
-
-- Zweryfikuj działanie dockera
-  
-```bash
-docker run hello-world
-```
-
 - Połącz się z maszyną wirtualną
 
 > Hasło znajdziesz w Key Vault.
@@ -114,7 +101,20 @@ ssh adminuser@<vm-ip>
 
 > Poniższe kroki wykonuj na maszynie wirtualnej.
 
-Utwórz katalog roboczy:
+- Dokończ konfigurację dockera
+
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
+
+- Zweryfikuj działanie dockera
+  
+```bash
+docker run hello-world
+```
+
+- Utwórz katalog roboczy:
 
 ```bash
 mkdir myagent && cd myagent
